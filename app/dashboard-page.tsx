@@ -10,12 +10,12 @@ import { CustomerBalancesTable } from '@/components/dashboard/customer-balances-
 import { ExpensesTable } from '@/components/dashboard/expenses-table'
 import { FinancialsTable } from '@/components/dashboard/financials-table'
 import { VendorBalancesTable } from '@/components/dashboard/vendor-balances-table'
+import { NetBalance } from '@/components/dashboard/net-balance'
 import { ViewSwitcher } from '@/components/dashboard/view-switcher'
 import { LoadingDashboard } from '@/components/dashboard/loading'
-import { FloatingSummary } from '@/components/dashboard/floating-summary'
 import { useTransferOrders } from '@/hooks/use-transfer-orders'
 import { groupOrdersByOrderNumber } from '@/lib/formatters'
-import { AlertCircle, DollarSign, ArrowRightLeft, ShoppingCart, TrendingUp, Users, Receipt, FileText, Building2 } from 'lucide-react'
+import { AlertCircle, DollarSign, ArrowRightLeft, ShoppingCart, TrendingUp, Users, Receipt, FileText, Building2, Calculator } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 
 const viewGroups = [
@@ -27,6 +27,7 @@ const viewGroups = [
       { id: 'orders', label: 'Transfer Orders', icon: <ShoppingCart className="h-4 w-4" /> },
       { id: 'due-from-seb', label: 'Due from SEB', icon: <DollarSign className="h-4 w-4" /> },
       { id: 'vehicles', label: 'SEB Fund Transfers', icon: <ArrowRightLeft className="h-4 w-4" /> },
+      { id: 'net-balance', label: 'Net Balance', icon: <Calculator className="h-4 w-4" /> },
     ]
   },
   {
@@ -92,6 +93,8 @@ export default function DashboardPage() {
         return <DueFromSEBTable />
       case 'vehicles':
         return <VehicleStatusTable />
+      case 'net-balance':
+        return <NetBalance />
       case 'profit':
         return <ProfitAnalysisTable />
       case 'balances':
@@ -122,7 +125,6 @@ export default function DashboardPage() {
           {renderActiveTable()}
         </div>
       </main>
-      <FloatingSummary />
     </>
   )
 }

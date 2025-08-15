@@ -25,7 +25,16 @@ export function ExpensesTable() {
   const [searchTerm, setSearchTerm] = useState('')
   const [sortField, setSortField] = useState<SortField>('expense_date')
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc')
-  const [selectedMonth, setSelectedMonth] = useState<string>('all')
+  
+  // Set current month as default
+  const getCurrentMonth = () => {
+    const now = new Date()
+    const year = now.getFullYear()
+    const month = String(now.getMonth() + 1).padStart(2, '0')
+    return `${year}-${month}`
+  }
+  
+  const [selectedMonth, setSelectedMonth] = useState<string>(getCurrentMonth())
 
   const expenses = data?.expenses || []
   const summary = data?.summary

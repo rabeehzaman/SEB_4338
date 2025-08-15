@@ -18,7 +18,16 @@ import { LoadingDashboard } from './loading'
 
 export function FinancialsTable() {
   const { data, isLoading, error } = useSEBFinancials()
-  const [selectedMonth, setSelectedMonth] = useState<string>('all')
+  
+  // Set current month as default
+  const getCurrentMonth = () => {
+    const now = new Date()
+    const year = now.getFullYear()
+    const month = String(now.getMonth() + 1).padStart(2, '0')
+    return `${year}-${month}`
+  }
+  
+  const [selectedMonth, setSelectedMonth] = useState<string>(getCurrentMonth())
 
   const monthlyData = data?.monthlyData || []
   const metrics = data?.metrics
