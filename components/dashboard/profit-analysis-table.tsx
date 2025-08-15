@@ -92,9 +92,15 @@ export function ProfitAnalysisTable({ initialGroups }: ProfitAnalysisTableProps)
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <div className="space-y-4">
+    <div className="space-y-4">
+      {/* Date Filter Section - Outside the card for better visibility */}
+      <div className="bg-white p-4 rounded-lg border shadow-sm relative z-10">
+        <DateRangeFilter onDateRangeChange={handleDateRangeChange} />
+      </div>
+      
+      {/* Main Card */}
+      <Card>
+        <CardHeader>
           <div className="flex items-center justify-between">
             <div>
               <CardTitle>Profit Analysis - SEB Vehicle</CardTitle>
@@ -120,11 +126,9 @@ export function ProfitAnalysisTable({ initialGroups }: ProfitAnalysisTableProps)
               )}
             </Button>
           </div>
-          <DateRangeFilter onDateRangeChange={handleDateRangeChange} />
-        </div>
-      </CardHeader>
-      <CardContent className="p-0">
-        <div className="overflow-x-auto">
+        </CardHeader>
+        <CardContent className="p-0">
+          <div className="overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow>
@@ -314,5 +318,6 @@ export function ProfitAnalysisTable({ initialGroups }: ProfitAnalysisTableProps)
         </div>
       </CardContent>
     </Card>
+    </div>
   )
 }

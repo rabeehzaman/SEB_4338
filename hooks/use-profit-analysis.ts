@@ -91,7 +91,7 @@ export function useProfitAnalysis(fromDate?: Date, toDate?: Date) {
     }
 
     fetchProfitAnalysis()
-  }, [fromDate?.getTime(), toDate?.getTime()])
+  }, [fromDate, toDate])
 
   return { data, isLoading, error }
 }
