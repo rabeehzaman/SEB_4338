@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { ChevronDown, ChevronRight, TrendingUp, TrendingDown, Package } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -49,10 +49,10 @@ export function ProfitAnalysisTable({ initialGroups }: ProfitAnalysisTableProps)
     }
   }
 
-  const handleDateRangeChange = (from: Date | undefined, to: Date | undefined) => {
+  const handleDateRangeChange = useCallback((from: Date | undefined, to: Date | undefined) => {
     setFromDate(from)
     setToDate(to)
-  }
+  }, [])
 
   const totalSale = profitGroups.reduce((sum, g) => sum + g.totalSale, 0)
   const totalSaleWithVat = profitGroups.reduce((sum, g) => sum + g.totalSaleWithVat, 0)

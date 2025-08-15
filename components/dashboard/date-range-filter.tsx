@@ -165,7 +165,7 @@ export function DateRangeFilter({ onDateRangeChange }: DateRangeFilterProps) {
       setDate(range)
       onDateRangeChange(range.from, range.to)
     }
-  }, [])
+  }, [onDateRangeChange])
 
   const handlePresetChange = (value: string) => {
     setSelectedPreset(value)
@@ -236,7 +236,7 @@ export function DateRangeFilter({ onDateRangeChange }: DateRangeFilterProps) {
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto p-0 z-50" align="start">
+        <PopoverContent className="w-auto p-0 z-50 bg-white" align="start">
           <Calendar
             initialFocus
             mode="range"
