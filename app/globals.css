@@ -55,4 +55,15 @@
     background-color: #f8fafc;
     color: hsl(var(--foreground));
   }
+  
+  /* Ensure dropdowns and popovers appear above table content */
+  [data-radix-popper-content-wrapper] {
+    z-index: 50 !important;
+  }
+  
+  /* Fix for select and popover dropdowns */
+  [data-slot="select-content"],
+  [data-slot="popover-content"] {
+    z-index: 50 !important;
+  }
 }
