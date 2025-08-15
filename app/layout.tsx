@@ -10,6 +10,12 @@ export const metadata: Metadata = {
   description: "Dashboard for managing warehouse transfer orders",
 }
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+}
+
 export default function RootLayout({
   children,
 }: {

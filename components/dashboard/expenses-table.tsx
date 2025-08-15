@@ -136,17 +136,17 @@ export function ExpensesTable() {
     <div className="space-y-6">
       {/* Summary Cards */}
       {summary && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4">
           <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">
+            <CardHeader className="pb-1 sm:pb-2">
+              <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground">
                 Total Expenses
               </CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="pt-1 sm:pt-2">
               <div className="flex items-center justify-between">
-                <p className="text-2xl font-bold">{formatCurrency(summary.totalExpenses)}</p>
-                <DollarSign className="h-5 w-5 text-muted-foreground" />
+                <p className="text-lg sm:text-2xl font-bold">{formatCurrency(summary.totalExpenses)}</p>
+                <DollarSign className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground hidden sm:block" />
               </div>
               <p className="text-xs text-muted-foreground mt-1">
                 {summary.expenseCount} transactions
@@ -155,15 +155,15 @@ export function ExpensesTable() {
           </Card>
 
           <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">
+            <CardHeader className="pb-1 sm:pb-2">
+              <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground">
                 Current Month
               </CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="pt-1 sm:pt-2">
               <div className="flex items-center justify-between">
-                <p className="text-2xl font-bold">{formatCurrency(summary.currentMonthTotal)}</p>
-                <Calendar className="h-5 w-5 text-muted-foreground" />
+                <p className="text-lg sm:text-2xl font-bold">{formatCurrency(summary.currentMonthTotal)}</p>
+                <Calendar className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground hidden sm:block" />
               </div>
               <div className="flex items-center gap-1 mt-1">
                 {summary.monthlyChange > 0 ? (
@@ -172,22 +172,23 @@ export function ExpensesTable() {
                   <TrendingDown className="h-3 w-3 text-green-500" />
                 ) : null}
                 <span className={`text-xs ${summary.monthlyChange > 0 ? 'text-red-500' : 'text-green-500'}`}>
-                  {summary.monthlyChange > 0 ? '+' : ''}{summary.monthlyChange.toFixed(1)}% vs last month
+                  {summary.monthlyChange > 0 ? '+' : ''}{summary.monthlyChange.toFixed(1)}%
+                  <span className="hidden sm:inline"> vs last month</span>
                 </span>
               </div>
             </CardContent>
           </Card>
 
           <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">
+            <CardHeader className="pb-1 sm:pb-2">
+              <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground">
                 Daily Average
               </CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="pt-1 sm:pt-2">
               <div className="flex items-center justify-between">
-                <p className="text-2xl font-bold">{formatCurrency(summary.dailyAverage)}</p>
-                <BarChart3 className="h-5 w-5 text-muted-foreground" />
+                <p className="text-lg sm:text-2xl font-bold">{formatCurrency(summary.dailyAverage)}</p>
+                <BarChart3 className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground hidden sm:block" />
               </div>
               <p className="text-xs text-muted-foreground mt-1">
                 Per active day
@@ -196,15 +197,15 @@ export function ExpensesTable() {
           </Card>
 
           <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">
+            <CardHeader className="pb-1 sm:pb-2">
+              <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground">
                 Largest Expense
               </CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="pt-1 sm:pt-2">
               <div className="flex items-center justify-between">
-                <p className="text-2xl font-bold">{formatCurrency(summary.largestExpense)}</p>
-                <Hash className="h-5 w-5 text-muted-foreground" />
+                <p className="text-lg sm:text-2xl font-bold">{formatCurrency(summary.largestExpense)}</p>
+                <Hash className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground hidden sm:block" />
               </div>
               <p className="text-xs text-muted-foreground mt-1">
                 Single transaction
@@ -216,22 +217,22 @@ export function ExpensesTable() {
 
       {/* Expenses Table */}
       <Card>
-        <CardHeader>
-          <div className="flex items-center justify-between">
+        <CardHeader className="p-3 sm:p-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div>
-              <CardTitle>SEB Vehicle Expenses</CardTitle>
-              <CardDescription>
+              <CardTitle className="text-base sm:text-lg">SEB Vehicle Expenses</CardTitle>
+              <CardDescription className="text-xs sm:text-sm mt-1">
                 {filteredAndSortedExpenses.length} expenses 
                 {selectedMonth !== 'all' && ` for ${selectedMonth}`}
                 {searchTerm && ` matching "${searchTerm}"`}
-                {' '}• Total: {formatCurrency(filteredTotal)}
+                <span className="block sm:inline">{' '}• Total: {formatCurrency(filteredTotal)}</span>
               </CardDescription>
             </div>
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2">
               <select
                 value={selectedMonth}
                 onChange={(e) => setSelectedMonth(e.target.value)}
-                className="px-3 py-2 text-sm border rounded-md"
+                className="px-2 py-1.5 sm:px-3 sm:py-2 text-xs sm:text-sm border rounded-md"
               >
                 <option value="all">All Months</option>
                 {availableMonths.map(month => (
@@ -240,13 +241,13 @@ export function ExpensesTable() {
                   </option>
                 ))}
               </select>
-              <div className="relative w-64">
-                <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+              <div className="relative w-full sm:w-64">
+                <Search className="absolute left-2 top-2 sm:top-2.5 h-3.5 w-3.5 sm:h-4 sm:w-4 text-muted-foreground" />
                 <Input
                   placeholder="Search expenses..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-8"
+                  className="pl-7 sm:pl-8 h-8 sm:h-10 text-xs sm:text-sm"
                 />
               </div>
             </div>
@@ -258,7 +259,7 @@ export function ExpensesTable() {
               <TableHeader>
                 <TableRow>
                   <TableHead 
-                    className="cursor-pointer hover:bg-muted/50"
+                    className="cursor-pointer hover:bg-muted/50 text-xs sm:text-sm"
                     onClick={() => handleSort('expense_date')}
                   >
                     Date
@@ -267,7 +268,7 @@ export function ExpensesTable() {
                     )}
                   </TableHead>
                   <TableHead 
-                    className="cursor-pointer hover:bg-muted/50"
+                    className="cursor-pointer hover:bg-muted/50 text-xs sm:text-sm hidden sm:table-cell"
                     onClick={() => handleSort('account_name')}
                   >
                     Account
@@ -276,7 +277,7 @@ export function ExpensesTable() {
                     )}
                   </TableHead>
                   <TableHead 
-                    className="cursor-pointer hover:bg-muted/50"
+                    className="cursor-pointer hover:bg-muted/50 text-xs sm:text-sm"
                     onClick={() => handleSort('description')}
                   >
                     Description
@@ -285,7 +286,7 @@ export function ExpensesTable() {
                     )}
                   </TableHead>
                   <TableHead 
-                    className="text-right cursor-pointer hover:bg-muted/50"
+                    className="text-right cursor-pointer hover:bg-muted/50 text-xs sm:text-sm"
                     onClick={() => handleSort('amount')}
                   >
                     Amount
@@ -293,7 +294,7 @@ export function ExpensesTable() {
                       sortDirection === 'asc' ? <TrendingUp className="inline ml-1 h-3 w-3" /> : <TrendingDown className="inline ml-1 h-3 w-3" />
                     )}
                   </TableHead>
-                  <TableHead className="text-center">Level</TableHead>
+                  <TableHead className="text-center hidden lg:table-cell">Level</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -306,25 +307,25 @@ export function ExpensesTable() {
                 ) : (
                   filteredAndSortedExpenses.map((expense) => (
                     <TableRow key={expense.id}>
-                      <TableCell>
+                      <TableCell className="text-xs sm:text-sm">
                         {expense.expense_date ? formatDate(expense.expense_date) : 
                          expense.original_date || '-'}
                       </TableCell>
-                      <TableCell className={getAccountColor(expense.account_name)}>
+                      <TableCell className={`${getAccountColor(expense.account_name)} text-xs sm:text-sm hidden sm:table-cell`}>
                         {expense.account_name || 'Uncategorized'}
                       </TableCell>
-                      <TableCell>
-                        <div className="max-w-md">
-                          <p className="truncate text-sm">{expense.full_description}</p>
+                      <TableCell className="text-xs sm:text-sm">
+                        <div className="max-w-[200px] sm:max-w-md">
+                          <p className="truncate">{expense.full_description}</p>
                           {expense.reference_no && (
-                            <p className="text-xs text-muted-foreground">Ref: {expense.reference_no}</p>
+                            <p className="text-xs text-muted-foreground hidden sm:block">Ref: {expense.reference_no}</p>
                           )}
                         </div>
                       </TableCell>
-                      <TableCell className="text-right font-semibold">
+                      <TableCell className="text-right font-semibold text-xs sm:text-sm">
                         {formatCurrency(expense.amount)}
                       </TableCell>
-                      <TableCell className="text-center">
+                      <TableCell className="text-center hidden lg:table-cell">
                         {getAmountBadge(expense.amount)}
                       </TableCell>
                     </TableRow>

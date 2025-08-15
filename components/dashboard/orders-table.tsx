@@ -83,12 +83,12 @@ export function OrdersTable({ orderGroups }: OrdersTableProps) {
 
   return (
     <Card>
-      <CardHeader>
-        <div className="flex items-center justify-between">
+      <CardHeader className="p-3 sm:p-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div>
-            <CardTitle>Transfer Orders</CardTitle>
-            <CardDescription>
-              {orderGroups.length} orders with items | Click order to view details
+            <CardTitle className="text-base sm:text-lg">Transfer Orders</CardTitle>
+            <CardDescription className="text-xs sm:text-sm mt-1">
+              {orderGroups.length} orders with items <span className="hidden sm:inline">| Click order to view details</span>
             </CardDescription>
           </div>
           <div className="flex gap-2">
@@ -97,24 +97,26 @@ export function OrdersTable({ orderGroups }: OrdersTableProps) {
               size="sm"
               onClick={handleExport}
               title="Export to CSV"
+              className="h-8 px-2 sm:px-3"
             >
-              <Download className="mr-2 h-4 w-4" />
-              <span className="hidden sm:inline">Export</span>
+              <Download className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+              <span className="ml-1.5 hidden sm:inline">Export</span>
             </Button>
             <Button
               variant="outline"
               size="sm"
               onClick={toggleAll}
+              className="h-8 px-2 sm:px-3"
             >
               {expandedOrders.size === orderGroups.length ? (
                 <>
-                  <ChevronDown className="mr-2 h-4 w-4" />
-                  <span className="hidden sm:inline">Collapse All</span>
+                  <ChevronDown className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                  <span className="ml-1.5 hidden sm:inline">Collapse All</span>
                 </>
               ) : (
                 <>
-                  <ChevronRight className="mr-2 h-4 w-4" />
-                  <span className="hidden sm:inline">Expand All</span>
+                  <ChevronRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                  <span className="ml-1.5 hidden sm:inline">Expand All</span>
                 </>
               )}
             </Button>
@@ -124,28 +126,28 @@ export function OrdersTable({ orderGroups }: OrdersTableProps) {
       <CardContent className="p-0">
         {/* Sticky Total Row */}
         <div className="sticky top-0 z-10 bg-white border-b-2 border-slate-200">
-          <div className="bg-gradient-to-r from-slate-50 to-slate-100 px-4 py-3">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <span className="text-sm font-semibold text-slate-600">SUMMARY</span>
-                <Badge variant="default">{orderGroups.length} orders</Badge>
+          <div className="bg-gradient-to-r from-slate-50 to-slate-100 px-3 sm:px-4 py-2 sm:py-3">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+              <div className="flex items-center gap-2 sm:gap-4">
+                <span className="text-xs sm:text-sm font-semibold text-slate-600">SUMMARY</span>
+                <Badge variant="default" className="text-xs">{orderGroups.length} orders</Badge>
               </div>
-              <div className="flex items-center gap-6">
+              <div className="flex items-center gap-3 sm:gap-6 text-xs sm:text-sm">
                 <div className="text-right">
-                  <span className="text-xs text-slate-500">Total Qty</span>
-                  <p className={`font-bold ${getValueColor(orderGroups.reduce((sum, g) => sum + g.totalQty, 0))}`}>
+                  <span className="text-[10px] sm:text-xs text-slate-500 block">Total Qty</span>
+                  <p className={`font-bold text-xs sm:text-sm ${getValueColor(orderGroups.reduce((sum, g) => sum + g.totalQty, 0))}`}>
                     {formatNumber(orderGroups.reduce((sum, g) => sum + g.totalQty, 0))}
                   </p>
                 </div>
-                <div className="text-right">
-                  <span className="text-xs text-slate-500">Total (excl. VAT)</span>
+                <div className="text-right hidden sm:block">
+                  <span className="text-xs text-slate-500 block">Total (excl. VAT)</span>
                   <p className={`font-bold ${getValueColor(orderGroups.reduce((sum, g) => sum + (g.totalValue / 1.15), 0))}`}>
                     {formatCurrency(orderGroups.reduce((sum, g) => sum + (g.totalValue / 1.15), 0))}
                   </p>
                 </div>
                 <div className="text-right">
-                  <span className="text-xs text-slate-500">Total (incl. VAT)</span>
-                  <p className={`font-bold text-lg ${getValueColor(orderGroups.reduce((sum, g) => sum + g.totalValue, 0))}`}>
+                  <span className="text-[10px] sm:text-xs text-slate-500 block">Total (incl. VAT)</span>
+                  <p className={`font-bold text-sm sm:text-lg ${getValueColor(orderGroups.reduce((sum, g) => sum + g.totalValue, 0))}`}>
                     {formatCurrency(orderGroups.reduce((sum, g) => sum + g.totalValue, 0))}
                   </p>
                 </div>
@@ -158,16 +160,16 @@ export function OrdersTable({ orderGroups }: OrdersTableProps) {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-[40px]">
+                <TableHead className="w-[30px] sm:w-[40px]">
                   <span className="sr-only">Expand/Collapse</span>
                 </TableHead>
-                <TableHead>Order Number</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead className="text-center">Items</TableHead>
-                <TableHead className="text-right">Total Qty</TableHead>
-                <TableHead className="text-right">Total</TableHead>
-                <TableHead className="text-right">Total w/VAT</TableHead>
-                <TableHead>Status</TableHead>
+                <TableHead className="text-xs sm:text-sm">Order Number</TableHead>
+                <TableHead className="text-xs sm:text-sm hidden sm:table-cell">Date</TableHead>
+                <TableHead className="text-center text-xs sm:text-sm hidden lg:table-cell">Items</TableHead>
+                <TableHead className="text-right text-xs sm:text-sm">Qty</TableHead>
+                <TableHead className="text-right text-xs sm:text-sm hidden md:table-cell">Total</TableHead>
+                <TableHead className="text-right text-xs sm:text-sm">Total w/VAT</TableHead>
+                <TableHead className="text-xs sm:text-sm hidden lg:table-cell">Status</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -181,79 +183,79 @@ export function OrdersTable({ orderGroups }: OrdersTableProps) {
                       className="cursor-pointer hover:bg-muted/50 transition-colors duration-150"
                       onClick={() => toggleOrder(group.orderNumber)}
                     >
-                      <TableCell>
+                      <TableCell className="p-1 sm:p-2">
                         <Button 
                           variant="ghost" 
                           size="icon" 
-                          className="h-6 w-6"
+                          className="h-5 w-5 sm:h-6 sm:w-6"
                           aria-label={isExpanded ? `Collapse order ${group.orderNumber}` : `Expand order ${group.orderNumber}`}
                           aria-expanded={isExpanded}
                         >
                           {isExpanded ? (
-                            <ChevronDown className="h-4 w-4" />
+                            <ChevronDown className="h-3 w-3 sm:h-4 sm:w-4" />
                           ) : (
-                            <ChevronRight className="h-4 w-4" />
+                            <ChevronRight className="h-3 w-3 sm:h-4 sm:w-4" />
                           )}
                         </Button>
                       </TableCell>
-                      <TableCell className="font-medium text-blue-600 dark:text-blue-400">
+                      <TableCell className="font-medium text-blue-600 dark:text-blue-400 text-xs sm:text-sm">
                         {group.orderNumber}
                       </TableCell>
-                      <TableCell>{formatDate(group.date)}</TableCell>
-                      <TableCell className="text-center">
-                        <Badge variant="secondary">{group.itemCount} items</Badge>
+                      <TableCell className="text-xs sm:text-sm hidden sm:table-cell">{formatDate(group.date)}</TableCell>
+                      <TableCell className="text-center hidden lg:table-cell">
+                        <Badge variant="secondary" className="text-xs">{group.itemCount} items</Badge>
                       </TableCell>
-                      <TableCell className={`text-right font-medium ${getValueColor(group.totalQty)}`}>
+                      <TableCell className={`text-right font-medium text-xs sm:text-sm ${getValueColor(group.totalQty)}`}>
                         {formatNumber(group.totalQty)}
                       </TableCell>
-                      <TableCell className={`text-right ${getValueColor(totalWithoutVat)}`}>
+                      <TableCell className={`text-right text-xs sm:text-sm hidden md:table-cell ${getValueColor(totalWithoutVat)}`}>
                         {formatCurrency(totalWithoutVat)}
                       </TableCell>
-                      <TableCell className={`text-right font-bold ${getValueColor(group.totalValue)}`}>
+                      <TableCell className={`text-right font-bold text-xs sm:text-sm ${getValueColor(group.totalValue)}`}>
                         {formatCurrency(group.totalValue)}
                       </TableCell>
-                      <TableCell>
-                        <Badge variant="outline">{group.status || 'Active'}</Badge>
+                      <TableCell className="hidden lg:table-cell">
+                        <Badge variant="outline" className="text-xs">{group.status || 'Active'}</Badge>
                       </TableCell>
                     </TableRow>
 
                     {isExpanded && (
                       <TableRow className="animate-in slide-in-from-top-2 duration-200">
                         <TableCell colSpan={8} className="bg-muted/30 p-0">
-                          <div className="pl-12 pr-4 py-4">
+                          <div className="pl-6 sm:pl-12 pr-2 sm:pr-4 py-2 sm:py-4 overflow-x-auto">
                             <Table>
                               <TableHeader>
                                 <TableRow>
-                                  <TableHead className="text-xs">Item Name</TableHead>
-                                  <TableHead className="text-xs text-right">Qty</TableHead>
-                                  <TableHead className="text-xs text-right">Cost</TableHead>
-                                  <TableHead className="text-xs text-right">Cost w/VAT</TableHead>
-                                  <TableHead className="text-xs text-right">Total</TableHead>
-                                  <TableHead className="text-xs text-right">Total w/VAT</TableHead>
+                                  <TableHead className="text-[10px] sm:text-xs">Item Name</TableHead>
+                                  <TableHead className="text-[10px] sm:text-xs text-right">Qty</TableHead>
+                                  <TableHead className="text-[10px] sm:text-xs text-right hidden sm:table-cell">Cost</TableHead>
+                                  <TableHead className="text-[10px] sm:text-xs text-right hidden md:table-cell">Cost w/VAT</TableHead>
+                                  <TableHead className="text-[10px] sm:text-xs text-right hidden sm:table-cell">Total</TableHead>
+                                  <TableHead className="text-[10px] sm:text-xs text-right">Total w/VAT</TableHead>
                                 </TableRow>
                               </TableHeader>
                               <TableBody>
                                 {group.items.map((item, idx) => (
                                   <TableRow key={`${group.orderNumber}-${idx}`}>
-                                    <TableCell className="text-xs">
-                                      <div className="flex items-center gap-2">
-                                        <Package className="h-3 w-3 text-muted-foreground" />
-                                        {item.item_name}
+                                    <TableCell className="text-[10px] sm:text-xs">
+                                      <div className="flex items-center gap-1 sm:gap-2">
+                                        <Package className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-muted-foreground hidden sm:inline" />
+                                        <span className="truncate max-w-[120px] sm:max-w-none">{item.item_name}</span>
                                       </div>
                                     </TableCell>
-                                    <TableCell className={`text-xs text-right ${getValueColor(item.qty)}`}>
+                                    <TableCell className={`text-[10px] sm:text-xs text-right ${getValueColor(item.qty)}`}>
                                       {formatNumber(item.qty)}
                                     </TableCell>
-                                    <TableCell className={`text-xs text-right ${getValueColor(item.cost)}`}>
+                                    <TableCell className={`text-[10px] sm:text-xs text-right hidden sm:table-cell ${getValueColor(item.cost)}`}>
                                       {formatCurrency(item.cost)}
                                     </TableCell>
-                                    <TableCell className={`text-xs text-right ${getValueColor(item.costwvat)}`}>
+                                    <TableCell className={`text-[10px] sm:text-xs text-right hidden md:table-cell ${getValueColor(item.costwvat)}`}>
                                       {formatCurrency(item.costwvat)}
                                     </TableCell>
-                                    <TableCell className={`text-xs text-right ${getValueColor(item.total)}`}>
+                                    <TableCell className={`text-[10px] sm:text-xs text-right hidden sm:table-cell ${getValueColor(item.total)}`}>
                                       {formatCurrency(item.total)}
                                     </TableCell>
-                                    <TableCell className={`text-xs text-right font-medium ${getValueColor(item.totalwvat)}`}>
+                                    <TableCell className={`text-[10px] sm:text-xs text-right font-medium ${getValueColor(item.totalwvat)}`}>
                                       {formatCurrency(item.totalwvat)}
                                     </TableCell>
                                   </TableRow>

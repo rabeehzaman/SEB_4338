@@ -113,8 +113,8 @@ export default function DashboardPage() {
   return (
     <>
       <DashboardHeader />
-      <main className="container mx-auto px-4 py-6">
-        <div className="space-y-6">
+      <main className="container mx-auto px-3 sm:px-4 py-3 sm:py-6 max-w-full overflow-x-hidden">
+        <div className="space-y-4 sm:space-y-6">
           <div className="flex justify-between items-center">
             <ViewSwitcher 
               viewGroups={viewGroups}

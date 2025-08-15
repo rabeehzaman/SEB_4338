@@ -94,29 +94,29 @@ export function NetBalance() {
   return (
     <div className="space-y-6">
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
         {/* Net Balance Card */}
         <Card className={netBalance > 0 ? 'border-red-200' : netBalance < 0 ? 'border-green-200' : 'border-gray-200'}>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-              <Calculator className="h-4 w-4" />
+          <CardHeader className="pb-1 sm:pb-2">
+            <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground flex items-center gap-1.5 sm:gap-2">
+              <Calculator className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
               Net Balance
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pt-1 sm:pt-2">
             <div className="flex items-center justify-between">
-              <p className={`text-2xl font-bold ${netBalance > 0 ? 'text-red-600' : netBalance < 0 ? 'text-green-600' : 'text-gray-600'}`}>
+              <p className={`text-lg sm:text-2xl font-bold ${netBalance > 0 ? 'text-red-600' : netBalance < 0 ? 'text-green-600' : 'text-gray-600'}`}>
                 {formatCurrency(netBalance)}
               </p>
               {netBalance > 0 ? (
-                <TrendingDown className="h-5 w-5 text-red-600" />
+                <TrendingDown className="h-4 w-4 sm:h-5 sm:w-5 text-red-600" />
               ) : netBalance < 0 ? (
-                <TrendingUp className="h-5 w-5 text-green-600" />
+                <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 text-green-600" />
               ) : (
-                <Calculator className="h-5 w-5 text-gray-600" />
+                <Calculator className="h-4 w-4 sm:h-5 sm:w-5 text-gray-600" />
               )}
             </div>
-            <p className="text-xs text-muted-foreground mt-1">
+            <p className="text-[10px] sm:text-xs text-muted-foreground mt-1">
               {netBalance > 0 ? 'SEB owes the branch' : netBalance < 0 ? 'Branch owes SEB' : 'Balanced'}
             </p>
           </CardContent>
@@ -124,20 +124,20 @@ export function NetBalance() {
 
         {/* Total Receivables Card */}
         <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-              <ArrowUpCircle className="h-4 w-4 text-green-600" />
+          <CardHeader className="pb-1 sm:pb-2">
+            <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground flex items-center gap-1.5 sm:gap-2">
+              <ArrowUpCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-green-600" />
               Total Receivables
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pt-1 sm:pt-2">
             <div className="flex items-center justify-between">
-              <p className="text-2xl font-bold text-green-600">
+              <p className="text-lg sm:text-2xl font-bold text-green-600">
                 {formatCurrency(totalReceivables)}
               </p>
-              <DollarSign className="h-5 w-5 text-green-600" />
+              <DollarSign className="h-4 w-4 sm:h-5 sm:w-5 text-green-600" />
             </div>
-            <p className="text-xs text-muted-foreground mt-1">
+            <p className="text-[10px] sm:text-xs text-muted-foreground mt-1">
               Amount to be received
             </p>
           </CardContent>
@@ -145,20 +145,20 @@ export function NetBalance() {
 
         {/* Fund Transfers Out Card */}
         <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-              <ArrowDownCircle className="h-4 w-4 text-orange-600" />
+          <CardHeader className="pb-1 sm:pb-2">
+            <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground flex items-center gap-1.5 sm:gap-2">
+              <ArrowDownCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-orange-600" />
               Fund Transfers Out
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pt-1 sm:pt-2">
             <div className="flex items-center justify-between">
-              <p className="text-2xl font-bold text-orange-600">
+              <p className="text-lg sm:text-2xl font-bold text-orange-600">
                 {formatCurrency(fundTransfersTotal)}
               </p>
-              <DollarSign className="h-5 w-5 text-orange-600" />
+              <DollarSign className="h-4 w-4 sm:h-5 sm:w-5 text-orange-600" />
             </div>
-            <p className="text-xs text-muted-foreground mt-1">
+            <p className="text-[10px] sm:text-xs text-muted-foreground mt-1">
               Amount transferred out
             </p>
           </CardContent>
@@ -167,62 +167,65 @@ export function NetBalance() {
 
       {/* Detailed Breakdown Table */}
       <Card>
-        <CardHeader>
-          <CardTitle>Net Balance Calculation</CardTitle>
-          <CardDescription>
+        <CardHeader className="p-3 sm:p-6">
+          <CardTitle className="text-base sm:text-lg">Net Balance Calculation</CardTitle>
+          <CardDescription className="text-xs sm:text-sm mt-1">
             Detailed breakdown of receivables and transfers
           </CardDescription>
         </CardHeader>
         <CardContent className="p-0">
+          <div className="overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Category</TableHead>
-                <TableHead>Description</TableHead>
-                <TableHead className="text-right">Amount</TableHead>
-                <TableHead className="text-center">Type</TableHead>
+                <TableHead className="text-xs sm:text-sm">Category</TableHead>
+                <TableHead className="text-xs sm:text-sm hidden sm:table-cell">Description</TableHead>
+                <TableHead className="text-right text-xs sm:text-sm">Amount</TableHead>
+                <TableHead className="text-center text-xs sm:text-sm">Type</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {/* Receivables Section */}
               <TableRow className="bg-green-50/50">
-                <TableCell className="font-semibold" colSpan={2}>
-                  <div className="flex items-center gap-2">
-                    <ArrowUpCircle className="h-4 w-4 text-green-600" />
-                    Total Receivables
+                <TableCell className="font-semibold text-xs sm:text-sm">
+                  <div className="flex items-center gap-1.5 sm:gap-2">
+                    <ArrowUpCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-green-600" />
+                    <span className="text-xs sm:text-sm">Total Receivables</span>
                   </div>
                 </TableCell>
-                <TableCell className="text-right font-bold text-green-600">
+                <TableCell className="text-muted-foreground text-xs sm:text-sm hidden sm:table-cell">
+                </TableCell>
+                <TableCell className="text-right font-bold text-green-600 text-xs sm:text-sm">
                   {formatCurrency(totalReceivables)}
                 </TableCell>
                 <TableCell className="text-center">
-                  <Badge className="bg-green-100 text-green-700">Inflow</Badge>
+                  <Badge className="bg-green-100 text-green-700 text-[10px] sm:text-xs">Inflow</Badge>
                 </TableCell>
               </TableRow>
               
               <TableRow>
-                <TableCell className="pl-8">Transfer Orders</TableCell>
-                <TableCell className="text-muted-foreground">
+                <TableCell className="pl-4 sm:pl-8 text-xs sm:text-sm">Transfer Orders</TableCell>
+                <TableCell className="text-muted-foreground text-xs sm:text-sm hidden sm:table-cell">
                   Pending transfer order amounts
                 </TableCell>
-                <TableCell className="text-right">
+                <TableCell className="text-right text-xs sm:text-sm">
                   {formatCurrency(transferOrdersTotal)}
                 </TableCell>
                 <TableCell className="text-center">
-                  <Badge variant="outline">Component</Badge>
+                  <Badge variant="outline" className="text-[10px] sm:text-xs">Component</Badge>
                 </TableCell>
               </TableRow>
               
               <TableRow>
-                <TableCell className="pl-8">Due from SEB</TableCell>
-                <TableCell className="text-muted-foreground">
+                <TableCell className="pl-4 sm:pl-8 text-xs sm:text-sm">Due from SEB</TableCell>
+                <TableCell className="text-muted-foreground text-xs sm:text-sm hidden sm:table-cell">
                   Outstanding amounts from SEB
                 </TableCell>
-                <TableCell className="text-right">
+                <TableCell className="text-right text-xs sm:text-sm">
                   {formatCurrency(dueFromSEBTotal)}
                 </TableCell>
                 <TableCell className="text-center">
-                  <Badge variant="outline">Component</Badge>
+                  <Badge variant="outline" className="text-[10px] sm:text-xs">Component</Badge>
                 </TableCell>
               </TableRow>
 
@@ -261,6 +264,7 @@ export function NetBalance() {
               </TableRow>
             </TableBody>
           </Table>
+          </div>
         </CardContent>
       </Card>
 

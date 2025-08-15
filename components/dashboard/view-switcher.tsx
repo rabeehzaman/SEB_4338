@@ -46,25 +46,28 @@ export function ViewSwitcher({ viewGroups, activeView, onViewChange }: ViewSwitc
   return (
     <div className="flex flex-col gap-3 w-full">
       {viewGroups.map((group) => (
-        <div key={group.id} className="flex items-center gap-2">
+        <div key={group.id} className="flex flex-col sm:flex-row sm:items-center gap-2">
           {/* Group label */}
-          <span className="text-xs text-muted-foreground uppercase font-semibold min-w-[80px]">
+          <span className="text-xs text-muted-foreground uppercase font-semibold sm:min-w-[80px]">
             {group.label}:
           </span>
           
           {/* Group tabs */}
-          <div className="inline-flex h-10 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground">
+          <div className="flex flex-wrap gap-1 sm:inline-flex sm:h-10 sm:items-center sm:justify-center sm:rounded-lg sm:bg-muted sm:p-1 sm:text-muted-foreground">
             {group.views.map((view) => (
               <button
                 key={view.id}
                 onClick={() => onViewChange(view.id)}
-                className={getButtonStyles(activeView === view.id, group.color)}
+                className={cn(
+                  getButtonStyles(activeView === view.id, group.color),
+                  "flex-1 sm:flex-initial min-w-[60px] sm:min-w-0"
+                )}
                 title={view.label}
               >
-                {view.icon && <span className="mr-2 sm:mr-2">{view.icon}</span>}
-                <span className="hidden lg:inline">{view.label}</span>
-                <span className="hidden sm:inline lg:hidden">{view.label.split(' ').map(w => w[0]).join('')}</span>
-                <span className="sm:hidden">{view.icon}</span>
+                {view.icon && <span className="mr-1.5 sm:mr-2">{view.icon}</span>}
+                <span className="text-xs sm:text-sm hidden xs:inline sm:hidden lg:inline">{view.label}</span>
+                <span className="text-xs xs:hidden">{view.label.split(' ')[0]}</span>
+                <span className="hidden sm:inline lg:hidden text-xs sm:text-sm">{view.label.split(' ').map(w => w[0]).join('')}</span>
               </button>
             ))}
           </div>

@@ -186,14 +186,14 @@ export function DateRangeFilter({ onDateRangeChange }: DateRangeFilterProps) {
   }
 
   return (
-    <div className="flex flex-wrap items-center gap-2">
+    <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-2">
       <div className="flex items-center gap-2">
-        <CalendarIcon className="h-4 w-4 text-muted-foreground" />
-        <span className="text-sm text-muted-foreground">Date Range:</span>
+        <CalendarIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-muted-foreground" />
+        <span className="text-xs sm:text-sm text-muted-foreground">Date Range:</span>
       </div>
 
       <Select value={selectedPreset} onValueChange={handlePresetChange}>
-        <SelectTrigger className="w-[180px]">
+        <SelectTrigger className="w-full sm:w-[180px] h-8 sm:h-10 text-xs sm:text-sm">
           <SelectValue placeholder="Select period" />
         </SelectTrigger>
         <SelectContent>
@@ -218,18 +218,23 @@ export function DateRangeFilter({ onDateRangeChange }: DateRangeFilterProps) {
           <Button
             variant="outline"
             className={cn(
-              'justify-start text-left font-normal',
+              'w-full sm:w-auto justify-start text-left font-normal h-8 sm:h-10 text-xs sm:text-sm',
               !date && 'text-muted-foreground'
             )}
           >
-            <CalendarIcon className="mr-2 h-4 w-4" />
+            <CalendarIcon className="mr-1.5 sm:mr-2 h-3.5 w-3.5 sm:h-4 sm:w-4" />
             {date?.from ? (
               date.to ? (
                 <>
-                  {format(date.from, 'LLL dd, y')} - {format(date.to, 'LLL dd, y')}
+                  <span className="hidden sm:inline">
+                    {format(date.from, 'LLL dd, y')} - {format(date.to, 'LLL dd, y')}
+                  </span>
+                  <span className="sm:hidden">
+                    {format(date.from, 'MMM dd')} - {format(date.to, 'MMM dd')}
+                  </span>
                 </>
               ) : (
-                format(date.from, 'LLL dd, y')
+                <span className="hidden sm:inline">{format(date.from, 'LLL dd, y')}</span>
               )
             ) : (
               <span>Pick a date range</span>
@@ -243,7 +248,8 @@ export function DateRangeFilter({ onDateRangeChange }: DateRangeFilterProps) {
             defaultMonth={date?.from}
             selected={date}
             onSelect={handleDateChange}
-            numberOfMonths={2}
+            numberOfMonths={window.innerWidth < 640 ? 1 : 2}
+            className="text-xs sm:text-sm"
           />
         </PopoverContent>
       </Popover>
