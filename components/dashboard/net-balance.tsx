@@ -96,7 +96,7 @@ export function NetBalance() {
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* Net Balance Card */}
-        <Card className={netBalance > 0 ? 'border-green-200' : 'border-red-200'}>
+        <Card className={netBalance > 0 ? 'border-red-200' : netBalance < 0 ? 'border-green-200' : 'border-gray-200'}>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
               <Calculator className="h-4 w-4" />
@@ -105,13 +105,15 @@ export function NetBalance() {
           </CardHeader>
           <CardContent>
             <div className="flex items-center justify-between">
-              <p className={`text-2xl font-bold ${netBalance > 0 ? 'text-green-600' : 'text-red-600'}`}>
+              <p className={`text-2xl font-bold ${netBalance > 0 ? 'text-red-600' : netBalance < 0 ? 'text-green-600' : 'text-gray-600'}`}>
                 {formatCurrency(netBalance)}
               </p>
               {netBalance > 0 ? (
+                <TrendingDown className="h-5 w-5 text-red-600" />
+              ) : netBalance < 0 ? (
                 <TrendingUp className="h-5 w-5 text-green-600" />
               ) : (
-                <TrendingDown className="h-5 w-5 text-red-600" />
+                <Calculator className="h-5 w-5 text-gray-600" />
               )}
             </div>
             <p className="text-xs text-muted-foreground mt-1">
@@ -248,11 +250,11 @@ export function NetBalance() {
                     Net Balance
                   </div>
                 </TableCell>
-                <TableCell className={`text-right font-bold text-xl ${netBalance > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                <TableCell className={`text-right font-bold text-xl ${netBalance > 0 ? 'text-red-600' : netBalance < 0 ? 'text-green-600' : 'text-gray-600'}`}>
                   {formatCurrency(netBalance)}
                 </TableCell>
                 <TableCell className="text-center">
-                  <Badge variant={netBalance > 0 ? 'default' : 'destructive'}>
+                  <Badge variant={netBalance > 0 ? 'destructive' : netBalance < 0 ? 'default' : 'outline'}>
                     {netBalance > 0 ? 'SEB Owes' : netBalance < 0 ? 'Branch Owes' : 'Balanced'}
                   </Badge>
                 </TableCell>
@@ -284,7 +286,7 @@ export function NetBalance() {
             <div className="border-t-2 border-slate-300 pt-3">
               <div className="flex justify-between items-center p-3 bg-white rounded-lg border-2 border-slate-200">
                 <span className="text-base font-bold">Net Balance</span>
-                <span className={`text-lg font-bold ${netBalance > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                <span className={`text-lg font-bold ${netBalance > 0 ? 'text-red-600' : netBalance < 0 ? 'text-green-600' : 'text-gray-600'}`}>
                   = {formatCurrency(netBalance)}
                 </span>
               </div>
