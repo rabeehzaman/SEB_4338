@@ -96,7 +96,7 @@ export function NetBalance() {
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* Net Balance Card */}
-        <Card className={netBalance < 0 ? 'border-red-200' : 'border-green-200'}>
+        <Card className={netBalance > 0 ? 'border-green-200' : 'border-red-200'}>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
               <Calculator className="h-4 w-4" />
@@ -105,17 +105,17 @@ export function NetBalance() {
           </CardHeader>
           <CardContent>
             <div className="flex items-center justify-between">
-              <p className={`text-2xl font-bold ${netBalance < 0 ? 'text-red-600' : 'text-green-600'}`}>
+              <p className={`text-2xl font-bold ${netBalance > 0 ? 'text-green-600' : 'text-red-600'}`}>
                 {formatCurrency(netBalance)}
               </p>
-              {netBalance >= 0 ? (
+              {netBalance > 0 ? (
                 <TrendingUp className="h-5 w-5 text-green-600" />
               ) : (
                 <TrendingDown className="h-5 w-5 text-red-600" />
               )}
             </div>
             <p className="text-xs text-muted-foreground mt-1">
-              {netBalance < 0 ? 'SEB owes the branch' : 'Branch owes SEB'}
+              {netBalance > 0 ? 'SEB owes the branch' : netBalance < 0 ? 'Branch owes SEB' : 'Balanced'}
             </p>
           </CardContent>
         </Card>
@@ -248,12 +248,12 @@ export function NetBalance() {
                     Net Balance
                   </div>
                 </TableCell>
-                <TableCell className={`text-right font-bold text-xl ${netBalance < 0 ? 'text-red-600' : 'text-green-600'}`}>
+                <TableCell className={`text-right font-bold text-xl ${netBalance > 0 ? 'text-green-600' : 'text-red-600'}`}>
                   {formatCurrency(netBalance)}
                 </TableCell>
                 <TableCell className="text-center">
-                  <Badge variant={netBalance < 0 ? 'destructive' : 'default'}>
-                    {netBalance < 0 ? 'Deficit' : 'Surplus'}
+                  <Badge variant={netBalance > 0 ? 'default' : 'destructive'}>
+                    {netBalance > 0 ? 'SEB Owes' : netBalance < 0 ? 'Branch Owes' : 'Balanced'}
                   </Badge>
                 </TableCell>
               </TableRow>
@@ -284,7 +284,7 @@ export function NetBalance() {
             <div className="border-t-2 border-slate-300 pt-3">
               <div className="flex justify-between items-center p-3 bg-white rounded-lg border-2 border-slate-200">
                 <span className="text-base font-bold">Net Balance</span>
-                <span className={`text-lg font-bold ${netBalance < 0 ? 'text-red-600' : 'text-green-600'}`}>
+                <span className={`text-lg font-bold ${netBalance > 0 ? 'text-green-600' : 'text-red-600'}`}>
                   = {formatCurrency(netBalance)}
                 </span>
               </div>
@@ -293,8 +293,8 @@ export function NetBalance() {
           
           <div className="mt-4 p-3 bg-blue-50 rounded-lg">
             <p className="text-sm text-blue-900">
-              <strong>Note:</strong> A negative net balance indicates that SEB owes money to the branch, 
-              while a positive balance indicates the branch owes money to SEB.
+              <strong>Note:</strong> A positive net balance indicates that SEB owes money to the branch, 
+              while a negative balance indicates the branch owes money to SEB.
             </p>
           </div>
         </CardContent>
