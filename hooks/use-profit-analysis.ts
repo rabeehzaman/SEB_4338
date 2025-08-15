@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase'
 import { ProfitAnalysisItem, ProfitAnalysisGroup } from '@/lib/types'
 
@@ -50,48 +50,36 @@ export function groupProfitByInvoice(items: ProfitAnalysisItem[]): ProfitAnalysi
 }
 
 export function useProfitAnalysis(fromDate?: Date, toDate?: Date) {
-  const [data, setData] = useState<ProfitAnalysisItem[] | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState<Error | null>(null)
+  // Convert dates to strings for stable query key
+  const fromDateStr = fromDate?.toISOString().split('T')[0] || null
+  const toDateStr = toDate?.toISOString().split('T')[0] || null
 
-  useEffect(() => {
-    async function fetchProfitAnalysis() {
-      try {
-        setIsLoading(true)
-        let query = supabase
-          .from('profit_analysis_seb_vehicle')
-          .select('*')
-        
-        // Apply date filter if dates are provided
-        if (fromDate && toDate) {
-          const startDate = fromDate.toISOString().split('T')[0]
-          const endDate = toDate.toISOString().split('T')[0]
-          query = query
-            .gte('inv_date', startDate)
-            .lte('inv_date', endDate)
-        } else if (fromDate) {
-          const startDate = fromDate.toISOString().split('T')[0]
-          query = query.gte('inv_date', startDate)
-        } else if (toDate) {
-          const endDate = toDate.toISOString().split('T')[0]
-          query = query.lte('inv_date', endDate)
-        }
-        
-        const { data, error } = await query
-          .order('inv_date', { ascending: false })
-          .order('inv_no', { ascending: false })
-
-        if (error) throw error
-        setData(data as ProfitAnalysisItem[])
-      } catch (err) {
-        setError(err instanceof Error ? err : new Error('Failed to fetch profit analysis'))
-      } finally {
-        setIsLoading(false)
+  return useQuery<ProfitAnalysisItem[]>({
+    queryKey: ['profit-analysis', fromDateStr, toDateStr],
+    queryFn: async () => {
+      let query = supabase
+        .from('profit_analysis_seb_vehicle')
+        .select('*')
+      
+      // Apply date filter if dates are provided
+      if (fromDateStr && toDateStr) {
+        query = query
+          .gte('inv_date', fromDateStr)
+          .lte('inv_date', toDateStr)
+      } else if (fromDateStr) {
+        query = query.gte('inv_date', fromDateStr)
+      } else if (toDateStr) {
+        query = query.lte('inv_date', toDateStr)
       }
-    }
+      
+      const { data, error } = await query
+        .order('inv_date', { ascending: false })
+        .order('inv_no', { ascending: false })
 
-    fetchProfitAnalysis()
-  }, [fromDate, toDate])
-
-  return { data, isLoading, error }
+      if (error) throw error
+      return data as ProfitAnalysisItem[]
+    },
+    staleTime: 30000, // Consider data stale after 30 seconds
+    refetchInterval: 60000, // Refetch every minute
+  })
 }
